@@ -15,17 +15,12 @@
 	"icon": "assets/jump_sounds/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": [
-			"com.merp.jump_sounds.JumpSounds"
-		],
-		"client": []
+		"client": [
+          "com.merp.jump_sounds.client.JumpSoundsClient"
+        ]
 	},
 	"mixins": [
-		"jump_sounds.mixins.json",
-		{
-			"config": "modid.client.mixins.json",
-			"environment": "client"
-		}
+		"jump_sounds.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.14.21",
@@ -33,7 +28,7 @@
 		"java": ">=17",
 		"fabric-api": "*"
 	},
-	"suggests": {
-		"another-mod": "*"
+	"conflicts": {
+		"presence-footsteps": "*"
 	}
 }
