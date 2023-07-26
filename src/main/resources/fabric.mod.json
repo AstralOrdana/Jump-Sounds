@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "jump_sounds",
+	"version": "${version}",
+	"name": "Jump Sounds",
+	"description": "Adds the Jump and Land sounds from Bedrock Edition!",
+	"authors": [
+		"Merp"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": ""
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/jump_sounds/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.merp.jump_sounds.JumpSounds"
+		],
+		"client": []
+	},
+	"mixins": [
+		"jump_sounds.mixins.json",
+		{
+			"config": "modid.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
