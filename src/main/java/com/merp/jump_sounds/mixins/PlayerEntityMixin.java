@@ -1,5 +1,6 @@
 package com.merp.jump_sounds.mixins;
 
+import com.merp.jump_sounds.client.JumpSoundsLogic;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -25,39 +26,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@Inject(method = "jump", at = @At("TAIL"))
 	public void jump(CallbackInfo ci) {
-		BlockState primaryState = this.getSteppingBlockState();
-		BlockState secondaryState = this.getWorld().getBlockState(this.getBlockPos().down());
-		if (this.isOnGround() && !primaryState.isAir() && this.getWorld().isClient()) {
-			if (primaryState.isIn(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)) {
-				playJumpSound(primaryState,1,1f);
-				playJumpSound(secondaryState,0.5f,0.8f);
-			} else {
-				playJumpSound(primaryState,1,1f);
-			}
-		}
+		JumpSoundsLogic.jump(this);
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void fall(CallbackInfo ci) {
-		BlockState primaryState = this.getSteppingBlockState();
-		BlockState secondaryState = this.getWorld().getBlockState(this.getBlockPos().down());
-		if (this.isOnGround() && !primaryState.isAir() && this.getWorld().isClient()) {
-			if (this.getLerpedPos(0).getY() > this.getLerpedPos(1).getY()) {
-				if (primaryState.isIn(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)) {
-					playJumpSound(primaryState,1,0.9f);
-					playJumpSound(secondaryState,0.5f,0.8f * 0.9f);
-				} else {
-					playJumpSound(primaryState,1,0.9f);
-				}
-			}
-		}
-	}
-
-	@Unique
-	protected void playJumpSound(BlockState state, float volMult, float pitchMult) {
-		BlockSoundGroup blockSoundGroup = state.getSoundGroup();
-		if (!this.isTouchingWater()) {
-			this.playSound(blockSoundGroup.getFallSound(), blockSoundGroup.getVolume() * 0.075F * volMult, blockSoundGroup.getPitch() * pitchMult);
-		}
+		JumpSoundsLogic.fall(this);
 	}
 }
